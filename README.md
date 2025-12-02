@@ -35,7 +35,7 @@ The application includes:
 
 ## Prerequisites
 
-- Java 25 (or compatible version)
+- Java 17 or higher
 - Gradle
 
 ## Running the Application
@@ -95,8 +95,10 @@ This will:
 
 The Gatling report will be available at:
 ```
-build/reports/gatling/logsimulatorSimulation-<timestamp>/index.html
+build/gatling-results/logsimulatorSimulation-<timestamp>/index.html
 ```
+
+**Note:** Make sure the application is running on `http://localhost:8080` before starting the Gatling tests.
 
 ## Log Format
 
