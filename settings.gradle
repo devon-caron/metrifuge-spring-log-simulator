@@ -1,1 +1,8 @@
 rootProject.name = 'LogSimulator'
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
