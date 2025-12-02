@@ -1,8 +1,8 @@
-rootProject.name = 'LogSimulator'
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
     }
 }
+
+rootProject.name = 'LogSimulator'

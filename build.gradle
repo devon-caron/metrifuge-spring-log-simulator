@@ -44,6 +44,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	// Add these to the gatling sourceSet's implementation configuration
+	gatlingImplementation 'io.gatling.highcharts:gatling-charts-highcharts:3.11.5'
+	gatlingImplementation 'org.scala-lang:scala-library:2.13.12'
+
+	// Keep in gatling config for runtime
 	gatling 'io.gatling.highcharts:gatling-charts-highcharts:3.11.5'
 	gatling 'org.scala-lang:scala-library:2.13.12'
 }
@@ -56,13 +61,15 @@ task gatlingRun(type: JavaExec) {
 	description = 'Run Gatling simulation'
 	group = 'gatling'
 
+	dependsOn compileGatlingScala
+
 	classpath = sourceSets.gatling.runtimeClasspath + configurations.gatling
 	mainClass = 'io.gatling.app.Gatling'
 
 	args = [
-		'--simulation', 'LogSimulatorSimulation',
-		'--results-folder', "${buildDir}/gatling-results",
-		'--binaries-folder', sourceSets.gatling.output.classesDirs.asPath,
-		'--resources-folder', sourceSets.gatling.resources.srcDirs.first()
+			'--simulation', 'LogSimulatorSimulation',
+			'--results-folder', "${buildDir}/gatling-results",
+			'--binaries-folder', sourceSets.gatling.output.classesDirs.asPath,
+			'--resources-folder', sourceSets.gatling.resources.srcDirs.first()
 	]
 }
