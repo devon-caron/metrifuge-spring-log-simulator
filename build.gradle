@@ -19,11 +19,37 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.xerial:sqlite-jdbc:3.47.1.0'
+	implementation 'org.hibernate.orm:hibernate-community-dialects:6.6.4.Final'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+
+	compileOnly 'org.projectlombok:lombok:1.18.36'
+	annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Gatling dependencies
+	testImplementation 'io.gatling.highcharts:gatling-charts-highcharts:3.13.1'
+	testImplementation 'io.gatling:gatling-app:3.13.1'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// Gatling task configuration
+tasks.register('gatlingRun', JavaExec) {
+	description = 'Run Gatling simulations'
+	group = 'Gatling'
+	classpath = sourceSets.test.runtimeClasspath
+	mainClass = 'io.gatling.app.Gatling'
+	args = [
+		'--simulations-folder', sourceSets.test.java.srcDirs.first().absolutePath,
+		'--resources-folder', sourceSets.test.resources.srcDirs.first().absolutePath,
+		'--results-folder', "${buildDir}/gatling-results"
+	]
 }
