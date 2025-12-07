@@ -8,7 +8,6 @@ import com.metrifuge.LogSimulator.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +21,6 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
 
-    @Transactional
     public TodoResponse createTodo(TodoRequest request) {
         log.info("Creating new todo with title: '{}'", request.getTitle());
         log.debug("Todo details - Priority: {}, Category: {}, DueDate: {}",
@@ -46,7 +44,6 @@ public class TodoService {
         return TodoResponse.fromEntity(savedTodo);
     }
 
-    @Transactional(readOnly = true)
     public TodoResponse getTodoById(Long id) {
         log.info("Fetching todo by ID: {}", id);
 
@@ -60,7 +57,6 @@ public class TodoService {
         return TodoResponse.fromEntity(todo);
     }
 
-    @Transactional(readOnly = true)
     public List<TodoResponse> getAllTodos() {
         log.info("Fetching all todos");
 
@@ -73,7 +69,6 @@ public class TodoService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public TodoResponse updateTodo(Long id, TodoRequest request) {
         log.info("Updating todo with ID: {}", id);
         log.debug("Update request details: {}", request);
@@ -126,7 +121,6 @@ public class TodoService {
         return TodoResponse.fromEntity(updatedTodo);
     }
 
-    @Transactional
     public void deleteTodo(Long id) {
         log.info("Deleting todo with ID: {}", id);
 
@@ -141,7 +135,6 @@ public class TodoService {
         log.info("Successfully deleted todo with ID: {}", id);
     }
 
-    @Transactional(readOnly = true)
     public List<TodoResponse> getTodosByCompleted(Boolean completed) {
         log.info("Fetching todos by completed status: {}", completed);
 
@@ -153,7 +146,6 @@ public class TodoService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<TodoResponse> getTodosByPriority(Todo.Priority priority) {
         log.info("Fetching todos by priority: {}", priority);
 
@@ -165,7 +157,6 @@ public class TodoService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<TodoResponse> getTodosByCategory(Todo.Category category) {
         log.info("Fetching todos by category: {}", category);
 
@@ -177,7 +168,6 @@ public class TodoService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<TodoResponse> searchTodos(String keyword) {
         log.info("Searching todos with keyword: '{}'", keyword);
 
@@ -189,7 +179,6 @@ public class TodoService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public Map<String, Long> getStatistics() {
         log.info("Calculating todo statistics");
 
