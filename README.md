@@ -13,6 +13,9 @@ A comprehensive Todo list application built with Spring Boot, designed to genera
 - **Statistics Endpoint** for aggregated data analysis
 - **Input Validation** with detailed error messages
 - **Exception Handling** with structured error responses
+- **OpenAPI 3 / Swagger UI** for interactive API documentation
+- **Docker Support** with multi-stage builds
+- **Kubernetes Ready** with manifests and deployment guides
 
 ## Technology Stack
 
@@ -45,11 +48,83 @@ mvn spring-boot:run
 
 The application will start on `http://localhost:8080`
 
+## Docker Deployment
+
+### Build Docker Image
+
+```bash
+docker build -t todo-app:latest .
+```
+
+### Run with Docker
+
+```bash
+docker run -d \
+  -p 8080:8080 \
+  -v todo-data:/app/data \
+  -v todo-logs:/app/logs \
+  --name todo-app \
+  todo-app:latest
+```
+
+### Run with Docker Compose
+
+```bash
+docker-compose up -d
+```
+
+Stop:
+```bash
+docker-compose down
+```
+
+View logs:
+```bash
+docker-compose logs -f
+```
+
+## Kubernetes Deployment
+
+### Quick Deploy
+
+```bash
+# Build and load image (for minikube)
+docker build -t todo-app:latest .
+minikube image load todo-app:latest
+
+# Deploy to cluster
+kubectl apply -f k8s/
+
+# Check status
+kubectl get pods -l app=todo-app
+```
+
+### Access the Application
+
+**Port Forward:**
+```bash
+kubectl port-forward svc/todo-app-service 8080:80
+```
+
+**NodePort (for minikube):**
+```bash
+minikube service todo-app-nodeport --url
+```
+
+**Using the deployment script:**
+```bash
+./build-and-deploy.sh
+```
+
+See [k8s/README.md](k8s/README.md) for detailed Kubernetes deployment guide.
+
 ### View Logs
 
 Logs are written to both console and file:
 - Console: Real-time log output
 - File: `logs/todo-app.log`
+- Docker: `docker logs todo-app -f`
+- Kubernetes: `kubectl logs -l app=todo-app -f`
 
 ### API Documentation (Swagger UI)
 

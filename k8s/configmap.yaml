@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-app-config
+  labels:
+    app: todo-app
+data:
+  application.yaml: |
+    spring:
+      application:
+        name: LogSimulator
+
+      datasource:
+        url: jdbc:sqlite:/app/data/todos.db
+        driver-class-name: org.sqlite.JDBC
+
+    logging:
+      level:
+        root: INFO
+        com.metrifuge.LogSimulator: DEBUG
+        org.springframework.web: INFO
+        org.springframework.data: INFO
+      pattern:
+        console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+        file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+      file:
+        name: /app/logs/todo-app.log
+
+    server:
+      port: 8080
+      shutdown: graceful
+
+    springdoc:
+      api-docs:
+        path: /api-docs
+        enabled: true
+      swagger-ui:
+        path: /swagger-ui.html
+        enabled: true
+        operationsSorter: method
+        tagsSorter: alpha
+        docExpansion: none
+        filter: true
+        tryItOutEnabled: true
+      show-actuator: false
+
+    management:
+      endpoint:
+        health:
+          show-details: when-authorized
+      endpoints:
+        web:
+          exposure:
+            include: health,info,metrics
