@@ -51,6 +51,21 @@ Logs are written to both console and file:
 - Console: Real-time log output
 - File: `logs/todo-app.log`
 
+### API Documentation (Swagger UI)
+
+Once the application is running, you can access the interactive API documentation:
+
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON**: http://localhost:8080/api-docs
+- **OpenAPI YAML**: http://localhost:8080/api-docs.yaml
+
+The Swagger UI provides:
+- Complete API documentation with request/response schemas
+- Interactive testing of all endpoints
+- Example values for all fields
+- Validation rules and constraints
+- Try-it-out functionality to test the API directly from the browser
+
 ## API Endpoints
 
 ### Create Todo
